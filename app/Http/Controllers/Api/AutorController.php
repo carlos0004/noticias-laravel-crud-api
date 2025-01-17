@@ -18,7 +18,7 @@ class AutorController extends Controller {
             return response()->json($data, 200);
         }
         $data = [
-            'autores' => $autores,
+            'result' => $autores,
             'status' => 200,
         ];
         return response()->json($data, 200);

@@ -4,7 +4,6 @@
 
 
 @prepend('scripts')
-@vite(['resources/js/admin/admin.js']) <!-- Cargar estilos específicos para el panel de administración -->
 @endprepend
 
 @section('body')

@@ -11,6 +11,4 @@
 
 </div>
 <div id="myGrid" class="ag-theme-quartz" style="height: 300px"></div>
-
-
 @endsection
