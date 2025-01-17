@@ -23,14 +23,22 @@ function request(url, options) {
 }
 
 
-async function crearTabla() {
+async function loadRecords(url, callback) {
     // Configuración de la API
     const options = {
         method: "GET"
     };
 
-    let data = await request('api/autores', options); // Esperar los datos de la API
-    const gridOptions = {
+    let data = await request(url, options); // Esperar los datos de la API
+    const gridOptions = callback(data); // Obtener la configuración de la tabla
+
+
+    const myGridElement = document.querySelector('#myGrid');
+    createGrid(myGridElement, gridOptions); // Crear la tabla con los datos
+}
+
+loadRecords('api/autores', (data) => {
+    return {
         rowData: data, // Usar los datos obtenidos de la API
         columnDefs: [
             { field: "id" },
@@ -41,8 +49,4 @@ async function crearTabla() {
             flex: 1,
         },
     };
-    const myGridElement = document.querySelector('#myGrid');
-    createGrid(myGridElement, gridOptions); // Crear la tabla con los datos
-}
-
-crearTabla();
+});
