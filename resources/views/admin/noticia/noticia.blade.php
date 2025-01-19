@@ -1,7 +1,14 @@
 @extends('admin.adminLayout')
 
+@push('scripts')
+@vite(['resources/js/admin/noticia.js']) <!-- Cargar estilos específicos para la seccion de autor -->
+@endpush
+
 @section('main')
-@foreach ($noticias as $noticia)
-{{$noticia->id . ' - ' . $noticia->titulo . ' - ' . $noticia->noticia . ' - ' . $noticia->categoria->nombre . ' - ' . $noticia->autor->nombre}}<br>
-@endforeach
+<div class="main-menu">
+    <h1>Noticias</h1>
+    <button class="btn btn-primary">Primary button</button>
+
+</div>
+<div id="myGrid" class="ag-theme-quartz" style="height: 300px"></div>
 @endsection

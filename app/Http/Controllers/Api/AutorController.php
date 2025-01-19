@@ -39,7 +39,7 @@ class AutorController extends Controller {
         }
 
         $autor = Autor::create([
-            'nombre' => $request->nombre,
+            'result' => $request->nombre,
         ]);
 
         if (!$autor) {
@@ -62,7 +62,7 @@ class AutorController extends Controller {
             return response()->json($data, 404);
         }
         $data = [
-            'autor' => $autor,
+            'autor' => (array)$autor,
             'status' => 200
         ];
         return response()->json($autor, 200);
@@ -112,7 +112,7 @@ class AutorController extends Controller {
         $autor->save();
         $data = [
             'message' => 'autor actualizado',
-            'autor' => $autor,
+            'result' => $autor,
             'status' => 200,
         ];
 

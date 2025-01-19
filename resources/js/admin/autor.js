@@ -3,6 +3,6 @@ import { loadRecords } from './admin.js';
 
 loadRecords('api/autores', [
     { field: "id" },
-    { field: "nombre" },
+    { field: "nombre", headerName: "Nombre y apellidos" },
     { field: "Acciones" }
 ]);

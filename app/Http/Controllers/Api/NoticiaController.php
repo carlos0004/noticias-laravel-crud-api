@@ -12,8 +12,19 @@ class NoticiaController extends Controller {
     public function index() {
         $noticias = Noticia::join('categorias', 'noticias.id_categoria', '=', 'categorias.id')
             ->join('autores', 'noticias.id_autor', '=', 'autores.id')
-            ->select('noticias.id', 'noticias.titulo', 'noticias.contenido', 'categorias.nombre', 'autores.nombre as nombre_autor')
+            ->select('noticias.id', 'noticias.titulo', 'noticias.contenido', 'categorias.nombre as nombre_categoria', 'autores.nombre as nombre_autor')
             ->get();
-        return response()->json($noticias);
+        if ($noticias->isEmpty()) {
+            $data = [
+                'message' => 'No se encontraron resultados',
+                'status' => 200,
+            ];
+            return response()->json($data, 200);
+        }
+        $data = [
+            'result' => $noticias,
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
     }
 }
