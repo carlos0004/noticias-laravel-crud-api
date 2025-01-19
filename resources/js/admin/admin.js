@@ -31,18 +31,20 @@ function request(url, options) {
     })
 }
 
-
+let rowImmutableStore;
+let gridApi;
 export async function loadRecords(url, columns) {
     // Configuración de la API
     const options = {
         method: "GET"
     };
 
-    let data = await request(url, options);
+    rowImmutableStore = await request(url, options);
+    rowImmutableStore = rowImmutableStore.result;
 
     // Esperar los datos de la API
     const gridOptions = {
-        rowData: data.result, // Usar los datos obtenidos de la API
+        rowData: rowImmutableStore, // Usar los datos obtenidos de la API
         columnDefs: columns,
         defaultColDef: {
             flex: 1,
@@ -55,23 +57,44 @@ export async function loadRecords(url, columns) {
 
 
     const myGridElement = document.querySelector('#myGrid');
-    createGrid(myGridElement, gridOptions); // Crear la tabla con los datos
+    gridApi = createGrid(myGridElement, gridOptions);
 }
 
-
 async function onCellEditRequest(event) {
-
     const data = event.data;
     const field = event.colDef.field;
     const newValue = event.newValue;
-    console.log(data);
-    console.log(field);
-    console.log(newValue);
+
+    const oldItem = rowImmutableStore.find((row) => row.id === data.id);
+
+    if (!oldItem || !field) {
+        return;
+    }
+
+    const newItem = { ...oldItem };
+
+    newItem[field] = newValue;
+
+    console.log("onCellEditRequest, updating " + field + " to " + newValue);
+
+    rowImmutableStore = rowImmutableStore.map((oldItem) =>
+        oldItem.id == newItem.id ? newItem : oldItem,
+    );
+    gridApi.setGridOption("rowData", rowImmutableStore);
 
     const url = `/api/autores/${data.id}`;
     const dataToUpdate = { [field]: newValue }; // Datos que deseas actualizar
-    console.log(dataToUpdate);
+    const options = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json" // Especifica que el cuerpo es JSON
+        },
+        body: JSON.stringify(dataToUpdate) // Convierte los datos en una cadena JSON
+    };
+    let response = await updateCell(url, dataToUpdate);
+}
 
+async function updateCell(url, dataToUpdate) {
     const options = {
         method: "PUT",
         headers: {
@@ -80,5 +103,5 @@ async function onCellEditRequest(event) {
         body: JSON.stringify(dataToUpdate) // Convierte los datos en una cadena JSON
     };
     let response = await request(url, options);
-
-};
+    return response;
+}
