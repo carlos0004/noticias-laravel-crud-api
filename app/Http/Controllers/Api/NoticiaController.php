@@ -76,6 +76,23 @@ class NoticiaController extends Controller {
         return response()->json($noticia, 200);
     }
 
+    public function delete($id) {
+        $noticia = Noticia::find($id);
+        if (!$noticia) {
+            $data = [
+                'message' => 'Noticia no encontrada',
+                'status' => '404'
+            ];
+            return response()->json($data, 404);
+        }
+        $noticia->delete();
+        $data = [
+            'message' => 'Noticia eliminada',
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
+    }
+
     public function update(Request $request, $id) {
         $noticia = Noticia::find($id);
         if (!$noticia) {

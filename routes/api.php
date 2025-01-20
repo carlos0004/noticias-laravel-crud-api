@@ -11,9 +11,7 @@ Route::get('/noticias/{id}', [NoticiaController::class, 'show']);
 Route::post('/noticias', [NoticiaController::class, 'store']);
 Route::put('/noticias/{id}', [NoticiaController::class, 'update']);
 Route::patch('/noticias/{id}', [NoticiaController::class, 'updatePartial']);
-Route::delete('/noticias/{id}', function () {
-    return 'Borrar una noticia';
-});
+Route::delete('/noticias/{id}', [NoticiaController::class, 'delete']);
 // Rutas para Autores
 Route::get('/autores', [AutorController::class, 'index']);
 Route::get('/autores/{id}', [AutorController::class, 'show']);
