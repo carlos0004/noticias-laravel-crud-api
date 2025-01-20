@@ -3,20 +3,14 @@
 use App\Http\Controllers\Api\AutorController;
 use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\NoticiaController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Rutas para noticias
 Route::get('/noticias', [NoticiaController::class, 'index']);
-Route::get('/noticias/{id}', function () {
-    return 'Obtener una noticia';
-});
-Route::post('/noticias', function () {
-    return 'Crear noticias';
-});
-Route::put('/noticias/{id}', function () {
-    return 'Actualizar una noticia';
-});
+Route::get('/noticias/{id}', [NoticiaController::class, 'show']);
+Route::post('/noticias', [NoticiaController::class, 'store']);
+Route::put('/noticias/{id}', [NoticiaController::class, 'update']);
+Route::patch('/noticias/{id}', [NoticiaController::class, 'updatePartial']);
 Route::delete('/noticias/{id}', function () {
     return 'Borrar una noticia';
 });
@@ -25,6 +19,7 @@ Route::get('/autores', [AutorController::class, 'index']);
 Route::get('/autores/{id}', [AutorController::class, 'show']);
 Route::post('/autores', [AutorController::class, 'store']);
 Route::put('/autores/{id}', [AutorController::class, 'update']);
+Route::patch('/autores/{id}', [AutorController::class, 'updatePartial']);
 Route::delete('/autores/{id}', [AutorController::class, 'delete']);
 
 
@@ -33,4 +28,5 @@ Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::get('/categorias/{id}', [CategoriaController::class, 'show']);
 Route::post('/categorias', [CategoriaController::class, 'store']);
 Route::put('/categorias/{id}', [CategoriaController::class, 'update']);
+Route::patch('/categorias/{id}', [CategoriaController::class, 'updatePartial']);
 Route::delete('/categorias/{id}', [CategoriaController::class, 'delete']);

@@ -4,7 +4,7 @@ import './admin.js';
 
 
 const columns = [
-    { field: 'id' },
+    { field: "id", hide: true },
     { field: 'titulo' },
     { field: 'contenido' },
     { field: 'nombre_categoria', headerName: 'Categoría' },

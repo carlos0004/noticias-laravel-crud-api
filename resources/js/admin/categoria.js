@@ -3,7 +3,7 @@ import './admin.js';
 
 
 const columns = [
-    { field: "id" },
+    { field: "id", hide: true },
     { field: "nombre", headerName: "Nombre categoria" },
     { field: "Acciones" }
 ];

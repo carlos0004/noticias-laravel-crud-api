@@ -79,7 +79,7 @@ export class GridManager {
 
     async updateCell(url, dataToUpdate) {
         const options = {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dataToUpdate),
         };

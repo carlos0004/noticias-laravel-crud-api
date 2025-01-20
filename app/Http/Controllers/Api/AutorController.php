@@ -116,6 +116,40 @@ class AutorController extends Controller {
             'status' => 200,
         ];
 
+        return response()->json($data, 200);
+    }
+    public function updatePartial(Request $request, $id) {
+        $autor = Autor::find($id);
+        if (!$autor) {
+            $data = [
+                'message' => 'autor no encontrada',
+                'status' => '404'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'unique:autores,nombre',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error en la validación de datos',
+                'errors' => $validator->errors(),
+                'status' => 400,
+            ];
+            return response()->json($data, 400);
+        }
+
+        if ($request->has('nombre')) {
+            $autor->nombre = $request->nombre;
+        }
+        $autor->save();
+        $data = [
+            'message' => 'autor actualizado',
+            'result' => $autor,
+            'status' => 200,
+        ];
 
         return response()->json($data, 200);
     }

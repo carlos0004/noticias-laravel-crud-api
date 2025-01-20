@@ -116,6 +116,39 @@ class CategoriaController extends Controller {
             'status' => 200,
         ];
 
+        return response()->json($data, 200);
+    }
+    public function updatePartial(Request $request, $id) {
+        $categoria = Categoria::find($id);
+        if (!$categoria) {
+            $data = [
+                'message' => 'Categoria no encontrada',
+                'status' => '404'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'unique:categorias,nombre',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error en la validación de datos',
+                'errors' => $validator->errors(),
+                'status' => 400,
+            ];
+            return response()->json($data, 400);
+        }
+        if ($request->has('nombre')) {
+            $categoria->nombre = $request->nombre;
+        }
+        $categoria->save();
+        $data = [
+            'message' => 'Categoria actualizada',
+            'categoria' => $categoria,
+            'status' => 200,
+        ];
 
         return response()->json($data, 200);
     }
