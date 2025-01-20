@@ -96,7 +96,6 @@ a {
 
 .main {
     grid-area: main;
-    background-color: var(--off-white);
     display: flex;
     flex-direction: column;
     gap: 5px;
