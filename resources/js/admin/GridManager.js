@@ -4,23 +4,20 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { createGrid } from 'ag-grid-community';
 
 export class GridManager {
-    constructor(baseUrl, gridElementSelector, columns) {
-        this.baseUrl = baseUrl;
-        this.gridElementSelector = gridElementSelector;
-        this.columns = columns;
-        this.rowImmutableStore = [];
-        this.gridApi = null;
-    }
+    static rowImmutableStore = [];
+    static gridApi = null;
+    static url = "";
 
-    async init() {
+    static async init(baseUrl, gridElementSelector, columns) {
         try {
-            await this.loadRecords();
+            this.url = baseUrl;
+            await this.loadRecords(baseUrl, gridElementSelector, columns);
         } catch (error) {
             console.error("Error initializing grid:", error);
         }
     }
 
-    async request(url, options) {
+    static async request(url, options) {
         try {
             const response = await fetch(url, options);
             if (!response.ok) {
@@ -33,28 +30,30 @@ export class GridManager {
         }
     }
 
-    async loadRecords() {
+    static async loadRecords(baseUrl, gridElementSelector, columns) {
         const options = { method: "GET" };
-        const data = await this.request(this.baseUrl, options);
+        const data = await this.request(baseUrl, options);
         this.rowImmutableStore = data.result;
 
         const gridOptions = {
             rowData: this.rowImmutableStore,
-            columnDefs: this.columns,
+            columnDefs: columns,
             defaultColDef: {
                 flex: 1,
                 minWidth: 100,
                 editable: true,
+                enableCellChangeFlash: true,
             },
+            getRowId: (params) => String(params.data.id),
             readOnlyEdit: true,
-            onCellEditRequest: (event) => this.onCellEditRequest(event),
+            onCellEditRequest: (event) => this.onCellEditRequest(baseUrl, event),
         };
 
-        const myGridElement = document.querySelector(this.gridElementSelector);
+        const myGridElement = document.querySelector(gridElementSelector);
         this.gridApi = createGrid(myGridElement, gridOptions);
     }
 
-    async onCellEditRequest(event) {
+    static async onCellEditRequest(baseUrl, event) {
         const data = event.data;
         const field = event.colDef.field;
         const newValue = event.newValue;
@@ -72,17 +71,24 @@ export class GridManager {
         );
         this.gridApi.setGridOption("rowData", this.rowImmutableStore);
 
-        const url = `${this.baseUrl}/${data.id}`;
+        const url = `${baseUrl}/${data.id}`;
         const dataToUpdate = { [field]: newValue };
         await this.updateCell(url, dataToUpdate);
     }
 
-    async updateCell(url, dataToUpdate) {
+    static async updateCell(url, dataToUpdate) {
         const options = {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dataToUpdate),
         };
+        return this.request(url, options);
+    }
+
+    static async delete(url) {
+        const options = {
+            method: "DELETE",
+        }
         return this.request(url, options);
     }
 }

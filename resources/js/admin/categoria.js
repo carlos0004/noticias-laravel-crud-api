@@ -1,12 +1,11 @@
 import { GridManager } from './GridManager.js';
+import { CustomButtonComponent } from './CustomButtonComponent.js';
 import './admin.js';
-
 
 const columns = [
     { field: "id", hide: true },
     { field: "nombre", headerName: "Nombre categoria" },
-    { field: "Acciones" }
+    { field: "Acciones", cellRenderer: CustomButtonComponent }
 ];
 
-const autoresGrid = new GridManager('api/categorias', '#myGrid', columns);
-autoresGrid.init();
+GridManager.init('api/categorias', '#myGrid', columns);
