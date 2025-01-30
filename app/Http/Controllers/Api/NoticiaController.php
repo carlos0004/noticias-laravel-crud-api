@@ -140,7 +140,7 @@ class NoticiaController extends Controller {
             return response()->json($data, 404);
         }
         $validator = Validator::make($request->all(), [
-            'titulo' => 'max:20',
+            'titulo' => 'max:20|unique:noticias,titulo',
             'contenido' => 'max:255',
             'id_categoria' => 'exists:categorias,id',
             'id_autor' => 'exists:autores,id',
@@ -152,6 +152,7 @@ class NoticiaController extends Controller {
                 'errors' => $validator->errors(),
                 'status' => 400,
             ];
+            return response()->json($data, 400);
         }
 
         if ($request->has('titulo')) {
@@ -167,6 +168,11 @@ class NoticiaController extends Controller {
             $noticia->id_autor = $request->id_autor;
         }
         $noticia->save();
-        return response()->json($noticia, 200);
+        $data = [
+            'message' => 'Categoria actualizada',
+            'categoria' => $noticia,
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
     }
 }

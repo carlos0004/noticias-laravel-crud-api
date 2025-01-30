@@ -2,6 +2,8 @@
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { createGrid } from 'ag-grid-community';
+import { request } from './request';
+import Swal from 'sweetalert2';
 
 export class GridManager {
     static rowImmutableStore = [];
@@ -17,22 +19,13 @@ export class GridManager {
         }
     }
 
-    static async request(url, options) {
-        try {
-            const response = await fetch(url, options);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error("Error in request:", error);
-            throw error;
-        }
-    }
+
 
     static async loadRecords(baseUrl, gridElementSelector, columns) {
         const options = { method: "GET" };
-        const data = await this.request(baseUrl, options);
+        const data = await request(baseUrl, options);
+        console.log(data);
+
         this.rowImmutableStore = data.result;
 
         const gridOptions = {
@@ -66,14 +59,28 @@ export class GridManager {
         const newItem = { ...oldItem };
         newItem[field] = newValue;
 
-        this.rowImmutableStore = this.rowImmutableStore.map((oldItem) =>
-            oldItem.id === newItem.id ? newItem : oldItem
-        );
-        this.gridApi.setGridOption("rowData", this.rowImmutableStore);
+
 
         const url = `${baseUrl}/${data.id}`;
         const dataToUpdate = { [field]: newValue };
-        await this.updateCell(url, dataToUpdate);
+        let result = await this.updateCell(url, dataToUpdate);
+        if (result.status != 200) {
+            Swal.fire({
+                text: result.message,
+                icon: "error",
+            });
+        } else {
+            this.rowImmutableStore = this.rowImmutableStore.map((oldItem) =>
+                oldItem.id === newItem.id ? newItem : oldItem
+            );
+            this.gridApi.setGridOption("rowData", this.rowImmutableStore);
+            Swal.fire({
+                text: result.message,
+                icon: "success",
+            });
+        }
+        console.log(result);
+
     }
 
     static async updateCell(url, dataToUpdate) {
@@ -82,13 +89,13 @@ export class GridManager {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(dataToUpdate),
         };
-        return this.request(url, options);
+        return request(url, options);
     }
 
     static async delete(url) {
         const options = {
             method: "DELETE",
-        }
-        return this.request(url, options);
+        };
+        return request(url, options);;
     }
-}
+}   

@@ -234,3 +234,19 @@ a {
         order: 3;
     }
 }
+
+.delete-btn {
+    background-color: #ef4444;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+}

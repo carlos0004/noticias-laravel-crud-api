@@ -1,5 +1,6 @@
 
 import { GridManager } from './GridManager.js';
+import { CustomButtonComponent } from './CustomButtonComponent.js';
 import './admin.js';
 
 
@@ -9,10 +10,10 @@ const columns = [
     { field: 'contenido' },
     { field: 'nombre_categoria', headerName: 'Categoría' },
     { field: 'nombre_autor', headerName: 'Autor' },
-    { field: 'Acciones' }
+    { field: "Acciones", cellRenderer: CustomButtonComponent, editable: false }
 ];
 
-const autoresGrid = new GridManager('api/noticias', '#myGrid', columns);
-autoresGrid.init();
+
+GridManager.init('api/noticias', '#myGrid', columns);
 
 
