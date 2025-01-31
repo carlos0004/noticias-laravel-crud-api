@@ -40,6 +40,8 @@ export class GridManager {
             getRowId: (params) => String(params.data.id),
             readOnlyEdit: true,
             onCellEditRequest: (event) => this.onCellEditRequest(baseUrl, event),
+            rowHeight: 45
+
         };
 
         const myGridElement = document.querySelector(gridElementSelector);

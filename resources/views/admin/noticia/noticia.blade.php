@@ -10,5 +10,5 @@
     <button class="btn btn-primary">Primary button</button>
 
 </div>
-<div id="myGrid" class="ag-theme-quartz" style="height: 300px"></div>
+<div id="myGrid" class="ag-theme-quartz" style="height: 600px"></div>
 @endsection

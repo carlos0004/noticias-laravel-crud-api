@@ -1,12 +1,13 @@
 import { GridManager } from "./GridManager";
 import Swal from "sweetalert2";
-export class CustomButtonComponent {
+export class DeleteButtonComponent {
     eGui;
     eButton;
     eventListener;
 
     init(param) {
         this.eGui = document.createElement('div');
+        this.eGui.className = 'center';
         const eButton = document.createElement('div');
         eButton.className = 'delete-btn';
         eButton.innerHTML = '<i class="fa fa-trash-o" aria-hidden="true"></i>';

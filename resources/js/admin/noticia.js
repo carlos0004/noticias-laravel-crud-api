@@ -1,6 +1,6 @@
 
 import { GridManager } from './GridManager.js';
-import { CustomButtonComponent } from './CustomButtonComponent.js';
+import { DeleteButtonComponent } from './DeleteButtonComponent.js';
 import './admin.js';
 import { request } from './request.js';
 
@@ -74,7 +74,7 @@ const columns = [
             return lookupKey(autores, params.newValue);
         }
     },
-    { field: "Acciones", cellRenderer: CustomButtonComponent, editable: false }
+    { field: "Acciones", cellRenderer: DeleteButtonComponent, editable: false }
 ];
 
 

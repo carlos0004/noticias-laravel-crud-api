@@ -250,3 +250,9 @@ a {
 .delete-btn:hover {
     background-color: #dc2626;
 }
+
+.center {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
