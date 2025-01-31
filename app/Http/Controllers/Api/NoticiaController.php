@@ -142,8 +142,8 @@ class NoticiaController extends Controller {
         $validator = Validator::make($request->all(), [
             'titulo' => 'max:20|unique:noticias,titulo',
             'contenido' => 'max:255',
-            'id_categoria' => 'exists:categorias,id',
-            'id_autor' => 'exists:autores,id',
+            'nombre_autor' => 'exists:categorias,id',
+            'nombre_categoria' => 'exists:autores,id',
         ]);
 
         if ($validator->fails()) {
@@ -161,16 +161,16 @@ class NoticiaController extends Controller {
         if ($request->has('contenido')) {
             $noticia->contenido = $request->contenido;
         }
-        if ($request->has('id_categoria')) {
-            $noticia->id_categoria = $request->id_categoria;
+        if ($request->has('nombre_categoria')) {
+            $noticia->id_categoria = $request->nombre_categoria;
         }
-        if ($request->has('id_autor')) {
-            $noticia->id_autor = $request->id_autor;
+        if ($request->has('nombre_autor')) {
+            $noticia->id_autor = $request->nombre_autor;
         }
         $noticia->save();
         $data = [
-            'message' => 'Categoria actualizada',
-            'categoria' => $noticia,
+            'message' => 'Noticia actualizada',
+            'noticia' => $noticia,
             'status' => 200,
         ];
         return response()->json($data, 200);

@@ -63,6 +63,8 @@ export class GridManager {
 
         const url = `${baseUrl}/${data.id}`;
         const dataToUpdate = { [field]: newValue };
+        console.log(dataToUpdate);
+
         let result = await this.updateCell(url, dataToUpdate);
         if (result.status != 200) {
             Swal.fire({
