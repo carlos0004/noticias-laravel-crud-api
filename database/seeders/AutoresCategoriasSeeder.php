@@ -13,14 +13,14 @@ class AutoresCategoriasSeeder extends Seeder {
      */
     public function run(): void {
         // Insertar 20 autores
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 10000; $i++) {
             DB::table('autores')->insert([
                 'nombre' => 'Autor ' . $i
             ]);
         }
 
-        // Insertar 20 categorías
-        for ($i = 1; $i <= 20; $i++) {
+        // Insertar1000 categorías
+        for ($i = 1; $i <= 10000; $i++) {
             DB::table('categorias')->insert([
                 'nombre' => 'Categoría ' . $i
             ]);

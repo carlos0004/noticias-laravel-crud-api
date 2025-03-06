@@ -16,7 +16,7 @@ Route::patch('/noticias/{id}', [NoticiaController::class, 'updatePartial']);
 Route::delete('/noticias/{id}', [NoticiaController::class, 'delete']);
 // Rutas para Autores
 // Route::middleware('auth:sanctum')->get('/autores', [AutorController::class, 'index']);
-Route::get('/autores', [AutorController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/autores', [AutorController::class, 'index']);
 Route::get('/autores/{id}', [AutorController::class, 'show']);
 Route::post('/autores', [AutorController::class, 'store']);
 Route::put('/autores/{id}', [AutorController::class, 'update']);
