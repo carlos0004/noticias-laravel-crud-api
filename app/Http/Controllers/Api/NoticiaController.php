@@ -61,11 +61,7 @@ class NoticiaController extends Controller {
     }
 
     public function show($id) {
-        $noticia = Noticia::join('categorias', 'noticias.id_categoria', '=', 'categorias.id')
-            ->join('autores', 'noticias.id_autor', '=', 'autores.id')
-            ->select('noticias.id', 'noticias.titulo', 'noticias.contenido', 'categorias.nombre as nombre_categoria', 'autores.nombre as nombre_autor')
-            ->where('noticias.id', $id)
-            ->first();
+        $noticia = Noticia::with(['categoria', 'autor'])->find($id);
         if (!$noticia) {
             $data = [
                 'message' => 'Noticia no encontrada',

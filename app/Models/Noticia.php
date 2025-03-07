@@ -14,4 +14,12 @@ class Noticia extends Model {
         'contenido',
     ];
     public $timestamps = false;
+
+    public function categoria() {
+        return $this->belongsTo(Categoria::class, 'id_categoria');
+    }
+
+    public function autor() {
+        return $this->belongsTo(Autor::class, 'id_autor');
+    }
 }

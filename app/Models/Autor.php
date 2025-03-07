@@ -11,4 +11,7 @@ class Autor extends Model {
         'nombre',
     ];
     public $timestamps = false;
+    public function noticias() {
+        return $this->hasMany(Noticia::class, 'id_autor');
+    }
 }
