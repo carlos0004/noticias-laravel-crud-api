@@ -39,7 +39,7 @@ class AutorController extends Controller {
         }
 
         $autor = Autor::create([
-            'result' => $request->nombre,
+            'nombre' => $request->nombre,
         ]);
 
         if (!$autor) {
