@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class NoticiasSeeder extends Seeder {
     public function run(): void {
-        for ($i = 1; $i <= 10000; $i++) {
+        for ($i = 1; $i <= 25; $i++) {
             DB::table('noticias')->insert([
                 'titulo' => 'Noticia ' . $i,
                 'id_autor' => rand(1, 20), // Selecciona un autor aleatorio

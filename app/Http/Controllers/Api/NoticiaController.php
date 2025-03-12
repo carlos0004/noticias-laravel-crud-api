@@ -12,10 +12,17 @@ use Mockery\Matcher\Not;
 
 class NoticiaController extends Controller {
     public function index() {
-        $noticias = Noticia::join('categorias', 'noticias.id_categoria', '=', 'categorias.id')
-            ->join('autores', 'noticias.id_autor', '=', 'autores.id')
-            ->select('noticias.id', 'noticias.titulo', 'noticias.contenido', 'categorias.nombre as nombre_categoria', 'autores.nombre as nombre_autor')
-            ->get();
+        $noticias = Noticia::with(['categoria', 'autor'])->get();
+        $noticias2 = [];
+        foreach ($noticias as $noticia) {
+            $noticias2[] =  [
+                'id' => $noticia['id'],
+                'titulo' => $noticia['titulo'],
+                'contenido' => $noticia['contenido'],
+                'nombre_autor' => $noticia['autor']['nombre'],
+                'nombre_categoria' => $noticia['categoria']['nombre'],
+            ];
+        }
         if ($noticias->isEmpty()) {
             $data = [
                 'message' => 'No se encontraron resultados',
@@ -24,7 +31,7 @@ class NoticiaController extends Controller {
             return response()->json($data, 200);
         }
         $data = [
-            'result' => $noticias,
+            'result' => $noticias2,
             'status' => 200,
         ];
         return response()->json($data, 200);
