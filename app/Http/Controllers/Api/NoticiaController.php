@@ -12,7 +12,7 @@ use Mockery\Matcher\Not;
 
 class NoticiaController extends Controller {
     public function index() {
-        $noticias = Noticia::with(['categoria', 'autor'])->get();
+        $noticias = Noticia::with(['categoria', 'autor'])->orderBy('id', 'desc')->get();
         $noticias2 = [];
         foreach ($noticias as $noticia) {
             $noticias2[] =  [
@@ -76,7 +76,11 @@ class NoticiaController extends Controller {
             ];
             return response()->json($data, 404);
         }
-        return response()->json($noticia, 200);
+        $data = [
+            'result' => $noticia,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     public function delete($id) {

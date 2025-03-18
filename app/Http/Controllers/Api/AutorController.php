@@ -62,24 +62,24 @@ class AutorController extends Controller {
             return response()->json($data, 404);
         }
         $data = [
-            'autor' => (array)$autor,
+            'result' => $autor,
             'status' => 200
         ];
-        return response()->json($autor, 200);
+        return response()->json($data, 200);
     }
 
     public function delete($id) {
         $autor = Autor::find($id);
         if (!$autor) {
             $data = [
-                'message' => 'autor no encontrada',
+                'message' => 'Autor no encontrado',
                 'status' => '404'
             ];
             return response()->json($data, 404);
         }
         $autor->delete();
         $data = [
-            'message' => 'autor eliminado',
+            'message' => 'Autor eliminado',
             'status' => 200,
         ];
         return response()->json($data, 200);

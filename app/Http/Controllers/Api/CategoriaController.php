@@ -62,10 +62,10 @@ class CategoriaController extends Controller {
             return response()->json($data, 404);
         }
         $data = [
-            'categoria' => $categoria,
+            'result' => $categoria,
             'status' => 200
         ];
-        return response()->json($categoria, 200);
+        return response()->json($data, 200);
     }
 
     public function delete($id) {
