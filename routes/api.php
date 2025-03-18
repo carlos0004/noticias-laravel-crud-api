@@ -4,8 +4,13 @@ use App\Http\Controllers\Api\AutorController;
 use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\NoticiaController;
 use App\Http\Controllers\Api\AuthController;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
 // Rutas para noticias
 Route::get('/noticias', [NoticiaController::class, 'index']);
@@ -36,7 +41,3 @@ Route::delete('/categorias/{id}', [CategoriaController::class, 'delete']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logOut'])->middleware('auth:sanctum');
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
