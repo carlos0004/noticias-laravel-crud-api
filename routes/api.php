@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\AutorController;
 use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\NoticiaController;
 use App\Http\Controllers\Api\AuthController;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
