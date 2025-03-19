@@ -20,7 +20,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto Laravel en tu entorno l
 
 ```bash
  git clone https://github.com/tu-usuario/tu-repositorio.git
- cd tu-repositorio
+ cd noticias-laravel-crud-api
 ```
 
 ### 2. Instalar dependencias
